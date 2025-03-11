@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensagem do Back-End</title>
+</head>
+<body>
+    <h3>Integrantes</h3>
+    <ul>
+        <li>Daniel Oliveira</li>
+        <li>Iago Bondesan Silva</li>
+        <li>Isabella Macedo</li>
+        <li>Mariana Dabrins</li>
+        <li>Thiago Campos</li>
+    </ul>
+
+    //botão para clicar
+    <button id="buscarBtn">Buscar Mensagem</button>
+    
+    <p id="mensagem"></p>
+
+    <script>
+        //evento dispara quando clicarem no botão
+        document.getElementById('buscarBtn').addEventListener('click', buscarMensagem);
+
+        function buscarMensagem() {
+            console.log("Iniciando requisição...");
+            
+            fetch('https://deploy-cebwbpfxeegrb5cq.brazilsouth-01.azurewebsites.net/ola')
+                .then(response => {
+                    console.log('Resposta recebida', response);
+                    if (!response.ok) {
+                        throw new Error('Falha na requisição: ' + response.statusText);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    console.log("Mensagem recebida:", data);
+                    document.getElementById('mensagem').innerText = data;
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar mensagem:', error);
+                    document.getElementById('mensagem').innerText = 'Erro ao buscar mensagem!';
+                });
+        }
+    </script>
+</body>
+</html>
